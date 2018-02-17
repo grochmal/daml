@@ -1,0 +1,17 @@
+# ignores for python and vim
+
+# python (2 and 3)
+*.pyc
+__pychache__
+
+# jupyter
+.ipynb_checkpoints
+
+# setuptools
+/dist
+/MANIFEST
+/*.egg-info
+
+# vim
+*.swp
+
