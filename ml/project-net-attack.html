@@ -11775,11 +11775,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="DAML-08---Unsupervised-Learning-Exercises">DAML 08 - Unsupervised Learning Exercises<a class="anchor-link" href="#DAML-08---Unsupervised-Learning-Exercises">&#182;</a></h1><p>Michal Grochmal <a href="mailto:michal.grochmal@city.ac.uk">michal.grochmal@city.ac.uk</a></p>
-<p>Using PCA to improve the results of the <code>kmeans</code> clustering over the handwritten digits
-does not improve the accuracy/F1 score in any meaningful way.
-Can we do better using t-SNE since it disengages the number clusters better than PCA?</p>
-<p>(★★☆)</p>
+<h1 id="DAML-Project---Net-Attack">DAML Project - Net Attack<a class="anchor-link" href="#DAML-Project---Net-Attack">&#182;</a></h1><p>Michal Grochmal <a href="mailto:michal.grochmal@city.ac.uk">michal.grochmal@city.ac.uk</a></p>
 
 </div>
 </div>
@@ -11788,116 +11784,109 @@ Can we do better using t-SNE since it disengages the number clusters better than
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is how the code looks attempting PCA as the preprocessor:</p>
+<p>To experience some more-or-less real data we will explore webserver logs from a honeypot machine.
+A honeypot is a server especially setup so that attacks on a website (or service)
+are likely to be directed to that server instead of the actual server running the site.</p>
+<p>A honeypot has several heuristics that allow it to determine whether
+a connection was an attempt at something malicious.
+These heuristics include information about the connection
+and about any extra activity performed during the connection.
+For example, if there was excessive memory of CPU usage from a process linked
+to a connection, the connection is considered malicious.
+Since honeypots attempt to attract malicious connections,
+the ratio between malicious and non-malicious connections is reasonable.</p>
+<p>We will look at the webserver logs for more then 10k connections,
+and at the evaluation of the connection by the honeypot heuristics.
+We will try to use only the webserver log information to build a machine learning model
+to classify connections as malicious or not malicious based on that information alone.
+We could then use this model to catch connections that did not direct themselves at the honeypot,
+and possibly prevent them from reaching deep into the server actually running the service.</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-talk&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">mode</span>
-<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="k">import</span> <span class="n">KMeans</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">load_digits</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">f1_score</span>
-<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="k">import</span> <span class="n">TSNE</span>
-<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">PCA</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="k">import</span> <span class="n">make_pipeline</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">digits</span> <span class="o">=</span> <span class="n">load_digits</span><span class="p">()</span>
-<span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
-<span class="n">clusters</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-<span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">clusters</span> <span class="o">==</span> <span class="n">i</span><span class="p">)</span>
-    <span class="n">labels</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">mode</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="n">mask</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">accuracy_score</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">labels</span><span class="p">),</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mat</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span>
-                 <span class="n">xticklabels</span><span class="o">=</span><span class="n">digits</span><span class="o">.</span><span class="n">target_names</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="n">digits</span><span class="o">.</span><span class="n">target_names</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;true label&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;predicted label&#39;</span><span class="p">);</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>That is not an improvement over the plain <code>kmeans</code>, we should try t-SNE.
-Yet, the t-SNE manifold technique in <code>sklearn</code> works similarly to a clustering algorithm
-and is not applicable beyond the data for which it is <code>fit</code>.
-This is a problem since the default <code>TSNE</code> class has only the <code>fit</code> and <code>fit_transform</code> methods,
-and the pipeline model creation requires that all preprocessors implement both <code>fit</code> and <code>transform</code> methods.</p>
-<p>Nothing that we cannot deal with using some hacky Python.
-Instead of using plain <code>TSNE</code> in your pipeline use the class defined below (remember to execute this cell).</p>
-<p>Evaluate one pipeline using our t-SNE with <code>n_components=2</code> and one pipeline with <code>n_components=3</code>.</p>
+<h2 id="The-Data">The Data<a class="anchor-link" href="#The-Data">&#182;</a></h2><p>The file <code>access.log</code> (contained in <code>extra-daml-project-data.zip</code>) contains the webserver logs.
+This is a <em>binary file</em> despite containing mostly text.
+Each line of the file contains a JSON encoded over ISO-8859-1 (latin-1) character set,
+and possibly a couple of bytes JSON escaped.
+All JSONs contain the exact same keys, and all keys are (byte) strings.</p>
+<p>The file <code>accesss.label</code> (contained in <code>extra-daml-project-labels.zip</code>) contains a label
+of the class that the corresponding JSON log is labeled against.
+The positive class (1) means a malicious connection,
+and the negative class (0) means a not malicious connection.
+The ratio is that about 1/10 of all connections in the file are malicious.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">PipeTSNE</span><span class="p">(</span><span class="n">TSNE</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</pre></div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Objective">Objective<a class="anchor-link" href="#Objective">&#182;</a></h2><p>We want to build an ML model that will reasonably classify connections as malicious
+or not malicious based on webserver log data alone.
+This model shall have a reasonable <em>generalization</em> score.
+The requirements are as follows.</p>
+<ul>
+<li>Select a non-parametric model for a baseline (e.g. Naive Bayes)</li>
+<li>Perform data pre-processing and evaluate if you can improve the baseline on preprocessing alone</li>
+<li>Select a different model which improves the generalization of the classification</li>
+</ul>
+<p>Describe each decision, e.g. why did you try one model over another,
+or why you decided on one form of preprocessing over another.</p>
+<p>Note: The data are binary strings but ML models accept numbers only.
+You will need to extract features from the data before attempting any classification.</p>
 
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Tips">Tips<a class="anchor-link" href="#Tips">&#182;</a></h2><ul>
+<li><p>This is byte data, therefore byte ranges and byte string lengths are easy to retrieve as features.</p>
+</li>
+<li><p>Not all features are useful.
+The data is actually quite dirty, some keys are absolutely the same across all samples.</p>
+</li>
+<li><p>See the Die Hard example for string processing in pandas.
+Whether you work on the strings as byte string or as converted UTF-8 strings does not alter the result.</p>
+</li>
+<li><p>Some features are more important than others, despite having smaller variance.
+Do not blindly perform dimensionality reduction expecting to perform better.</p>
+</li>
+<li><p>One-Hot-Encoding will be useful.
+Several features have only a handful of values, i.e. they are categorical.</p>
+</li>
+<li><p>Explore the data!  Find all values and the number of values within each feature.
+On UNIX a useful tool is <a href="https://stedolan.github.io/jq/">jq</a>, which is capable of querying the combined JSON file directly.</p>
+</li>
+</ul>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Extra">Extra<a class="anchor-link" href="#Extra">&#182;</a></h2><p>If you want a bigger challenge (i.e. this is not strictly part of the project),
+try clustering the connections.
+In other words, had we not had the honeypot heuristics whether we could be able
+to still guess malicious from non-malicious connections from the data alone.</p>
+<p>Using the same data preparation for the classification use <code>kmeans</code> to find clusters.
+And compare how well the clusters match to the honeypot labels.
+Here dimensionality reduction may help.</p>
+<p>For an even bigger challenge you can try <a href="http://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html">other forms of clustering</a>
+available in <code>sklearn</code>.</p>
+
+</div>
+</div>
 </div>
     </div>
   </div>
