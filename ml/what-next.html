@@ -11775,7 +11775,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="DAML-09---Real-World-Problems">DAML 09 - Real World Problems<a class="anchor-link" href="#DAML-09---Real-World-Problems">&#182;</a></h1><p>Michal Grochmal <a href="mailto:michal.grochmal@city.ac.uk">michal.grochmal@city.ac.uk</a></p>
+<h1 id="DAML-10---What-Next?">DAML 10 - What Next?<a class="anchor-link" href="#DAML-10---What-Next?">&#182;</a></h1><p>Michal Grochmal <a href="mailto:michal.grochmal@city.ac.uk">michal.grochmal@city.ac.uk</a></p>
 
 </div>
 </div>
@@ -11784,11 +11784,14 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Just so we have this in one place,
-let's group together all the higher level issues that concern machine learning models.
-These issues happen almost every time we want
-to use a machine learning model to solve a real world problem (i.e. not a toy problem).
-We have already discussed several of them but a list works better as a reference.</p>
+<p>We covered a good deal of Python tools for data science and a good deal
+of machine learning models.
+Of course that is not all that there is to Python, Data Science or Machine Learning.
+The books from which this course has been put together are more extensive on
+several fronts, and moreover, several more advanced materials exist.</p>
+<p>Here is a, non-exhaustive, summary of what interesting material can be found out there.
+I have tried to use mostly material that is available under a permissive license
+but (unfortunately) some really good material is not freely available.</p>
 
 </div>
 </div>
@@ -11797,25 +11800,14 @@ We have already discussed several of them but a list works better as a reference
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Bias,-Variance,-and-the-Size-of-Training-Data">Bias, Variance, and the Size of Training Data<a class="anchor-link" href="#Bias,-Variance,-and-the-Size-of-Training-Data">&#182;</a></h2><p>The <em>bias vs variance</em> trade-off argues that a model that is not complex enough
-will <em>underfit</em> the data, and a model that is too complex will <em>overfit</em> the data.
-We control model complexity through model hyperparameters,
-and we can estimate a good complexity by trying several hyperparameters and
-cross-validating their performance.</p>
-<p>Yet, the model complexity found by tuning the hyperparameters is not constant
-when we add more data points.
-In other words, we can prove that a problem is solvable by sampling our data points;
-but we cannot argue that a model tuned to use certain hyperparameters
-will perform (generalize) as well on new data.</p>
-<p>If we have enough data to worry about the training time,
-we can use a <strong>learning curve</strong> to estimate how well our hyperparameters,
-tuned on small samples will perform on the full dataset.
-The <em>total variance in the dataset is directly proportional
-to the number of samples needed to explain this variance</em>.
-Therefore, if we train and tune our model on increasingly bigger samples of our dataset,
-the score of the model on its training data and its test set will converge.
-Once this converges we can be confident that we have found the number of samples
-needed to account for the entire variance in the data.</p>
+<p><a href="https://www.statisticsdonewrong.com"><em>Statistics Done Wrong</em> by Alex Reinhart</a></p>
+<p>Read it, it is short, it is sweet and it is funny.
+And after you did go through a lot of Machine Learning and Statistics material,
+read it again, you will find that several fallacies of statistics are not only
+present in machine learning but also help you to reason about why a model does not work.
+Seriously, read this.
+The <a href="https://nostarch.com/statsdonewrong">book</a> is an extended version with more graphs and a handful more examples.
+Still as funny as the website.</p>
 
 </div>
 </div>
@@ -11824,23 +11816,11 @@ needed to account for the entire variance in the data.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Validate-your-Model!">Validate your Model!<a class="anchor-link" href="#Validate-your-Model!">&#182;</a></h2><p>The difficult part of the art of machine learning is not making a model work,
-it is to prove that is works and that it will work for new data.
-Moreover, depending of the problem we may want to validate a model for different things,
-e.g. in a fraud detection model we want the recall
-of fraud data points to be the most important validation.</p>
-<p>If your model will work with new data, just cross-validating it is not enough.
-Cross-validation allows us to select the best hyperparameters,
-and gives us a good estimate of how well a model performs;
-but it does not give us an estimate of how badly our model can perform on new data,
-i.e. we do not have a generalization baseline.</p>
-<p>To estimate how our model performs against new data, we need to separate our data
-into a training and test sets and only then perform cross-validation on the training set alone.
-The resulting model's generalization can then be evaluated on the test set.
-In other words, we now have a test set, and several folds
-which are the training and validation sets.
-This ensures that the model sees only the training set during the tuning of its parameters,
-and sees only the training and validation sets during the tuning of its hyperparameters.</p>
+<p><a href="https://jakevdp.github.io/PythonDataScienceHandbook/"><em>Python Data Science Handbook</em> by Jake VanderPlas</a></p>
+<p>The book covers pretty similar material as the course.
+Yet we did not cover everything that VanderPlas covers, notably about NumPy and pandas.
+If there is something which you believe you did not get or just want
+something easy to read which is similar to this course, start here.</p>
 
 </div>
 </div>
@@ -11849,21 +11829,12 @@ and sees only the training and validation sets during the tuning of its hyperpar
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Scaling-Data">Scaling Data<a class="anchor-link" href="#Scaling-Data">&#182;</a></h2><p>Machine Learning algorithms work on numbers, and assume that if a number is bigger
-it means that this number is more important.
-Yet, that is often not what we actually want.
-Most models are sensitive to the magnitude of the features,
-and scaling the features to have a similar magnitude will,
-more often than not, give better results.
-Borrowing from <code>sklearn</code> two common ways of scaling features are:</p>
-<ul>
-<li><p><a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">StandardScaler</a> subtracts the mean and then divides by the maximum (absolute)
-to achieve mean zero and variance one for all features.</p>
-</li>
-<li><p><a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.Normalizer.html">Normalizer</a> forces all features to have values between zero and one.
-Neural networks often need data in this form.</p>
-</li>
-</ul>
+<p><a href="http://scikit-learn.org/stable/user_guide.html">scikit-learn User Guide</a></p>
+<p>One of the biggest reasons why people use <code>sklearn</code> is its user guide.
+It is extensive and written as a lecture.
+I'm not asking you to read the entire documentation of the library,
+just the user guide, which should be accessible after this course.
+If you struggle over the user guide, go back to VanderPlas' book.</p>
 
 </div>
 </div>
@@ -11872,25 +11843,12 @@ Neural networks often need data in this form.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Ensembles,-Voting-and-OVO-vs-OVR">Ensembles, Voting and OVO vs OVR<a class="anchor-link" href="#Ensembles,-Voting-and-OVO-vs-OVR">&#182;</a></h2><p>Ensemble methods are powerful.
-Depending on how you setup the ensemble it can bestow the performance of models
-or work around limitations of certain models.</p>
-<p>A <em>bagging</em> technique (akin of, but no limited to, random forests or ada boost)
-takes several models, trains each and predicts by majority vote across all models.
-The internal models are often trained on subsets of the data, or with different
-randomization and hyperparameters.
-Bagging increases the performance and generalization of the models,
-and makes up for models which suffer from in-built overfitting (i.e. low generalization).</p>
-<p><em>One vs one</em> (OVO) and <em>one vs rest</em> (OVR) techniques are used to allow binary classifiers
-to perform multiclass classification.
-OVO trains a classifier for every pair of classes,
-this means that a big number of binary classifiers will be trained on
-subsets of data (only the samples for the two classes).
-The OVO runs all competing classifiers and decides on the classes with most wins.
-In OVR (also called OVA, One vs All) the number of trained classifiers is the number of classes,
-each classifier is trained on the samples of one class as the positive class
-and all other samples as the negative class. 
-OVR then selects the answer by picking the class with the higher score.</p>
+<p><a href="http://greenteapress.com/thinkstats2/html/index.html"><em>Think Stats</em> by Allen B. Downey</a></p>
+<p>A good enough basis in statistics.
+From basic statistics up to estimation using a model.
+In the end machine learning evolved thanks to the existence of statistical models,
+understanding what these statistical models are often helps understanding how
+an ML model may have been born.</p>
 
 </div>
 </div>
@@ -11899,38 +11857,13 @@ OVR then selects the answer by picking the class with the higher score.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Probabilities-versus-Decision-Functions">Probabilities versus Decision Functions<a class="anchor-link" href="#Probabilities-versus-Decision-Functions">&#182;</a></h2><p>Being able to explain why your model classifies things the way it does,
-may or may not be important for the problem you are solving.
-Classification (and often regression) can be performed in two ways:
-by constructing a decision function and deciding upon classes/values based
-on this function; or by assigning probabilities to each class/value and
-deciding based on the higher probability.</p>
-<p>Probabilities can be computed for every class, and therefore are easy to explain to humans,
-e.g. a misclassification between the wrong class having 51% confidence
-and the correct one having 47% confidence makes easy to argue that the model
-needs a little more tuning (but does not need a rewrite).
-With a decision function the explanation of model errors can become hairy,
-since most decision functions compute their score in very high dimensions.</p>
-<p>Some models based on decision functions are (these have a <code>decision_function</code> method in <code>sklearn</code>):</p>
-<ul>
-<li>SVM</li>
-<li>Logistic Regression (some regression algorithms <em>are</em> their own decision functions)</li>
-<li>Neural Networks</li>
-</ul>
-<p>Models based on probabilities are (these have a <code>predict_proba</code> method in <code>sklearn</code>):</p>
-<ul>
-<li>k Nearest Neighbors</li>
-<li>Naive Bayes</li>
-<li>Decision Trees and Random Forests</li>
-</ul>
-<p>Most classifiers that work by building a decision functions are <em>binary classifiers</em>,
-and require the use of OVO or OVR techniques to perform multilabel classification.
-Probability based classifiers perform multilabel classification by default.</p>
-<p>Dimensionality reduction has a only the <em>explained variance</em> method (in the PCA)
-that may give some insight into the model, manifold methods lack an explanation feature.
-Some clustering methods may provide probabilities but these have less
-value to explain the model since the cluster centers may be incorrect,
-instead techniques such as <em>silhouette scores</em> better visualize (and explain) a clustering model.</p>
+<p><a href="https://nlp.stanford.edu/IR-book/"><em>Introduction to Information Retrieval</em> by Manning, Raghavan and Schütze</a></p>
+<p>A book about search engines, not machine learning.
+Yet, ML borrows much from search engine construction.
+It is from here that we derive our concepts (and often implementation)
+of the precision and recall, and F1 (or any $F_n$) score.
+Scaling up ML model is often guided by how search engines have been scaled
+or the years.</p>
 
 </div>
 </div>
@@ -11939,37 +11872,13 @@ instead techniques such as <em>silhouette scores</em> better visualize (and expl
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Online-Learning">Online Learning<a class="anchor-link" href="#Online-Learning">&#182;</a></h2><p>One thing we did not touch yet is the concept of <em>online learning</em>.
-This is to differ it from <em>offline</em> (or batch) learning.
-In <em>offline learning</em> we can work with all data we will ever feed the model
-with at once, i.e. we can load a dataset in memory, use cross-validation
-to tune a model over this dataset and test against a test set.
-Offline learning is incredibly common in data analysis.</p>
-<p>The problem starts when we plan to build a model (say, classifier) on top of data that
-is continuously entering or flowing through the system.
-We never have the full dataset in such a case,
-we may have all data until today but even that will not necessarily be complete.
-What we need is a model that can learn and <em>re-learn</em> from new data,
-such is an online learning model.</p>
-<p>To perform online learning we need to be capable of tuning model
-parameters to new data without looking back at the previous data.
-In other words,
-the model parameters must <em>represent the data seen until now</em> and if we change such
-a parameter slightly it will not affect the overall model too much.</p>
-<p>It turns out that most models that predict probabilities cannot be used for online learning,
-this is because these models make an estimate of a probability distribution
-and it is not possible to re-estimate a probability distribution knowing only
-the distribution and new data points.
-Well, it is possible to draw points from the distribution,
-add the new ones and re-estimate but that would still require us to know how many points to
-draw (e.g. the same number of points as in the old data).</p>
-<p>Decision functions, when cleverly parametrized, are much easier to re-tune to new data.
-A small change to a parameter in the decision function can bring the model closer
-new data with very little computational effort.</p>
-<p>But how small a change?  That answer depends on the problem.
-This small (or not so small) change is called the <em>learning rate</em> of an online learning model.
-A big learning rate will make the model forget about old data quickly,
-a very small learning rate will make the model have a lot of inertia when adapting to new data.</p>
+<p><a href="http://www.deeplearningbook.org/"><em>Deep Learning</em> by Goodfellow and Bengio and Courville</a></p>
+<p>Has a very interesting introduction into Linear Algebra and some Probability.
+Then it delves deep into deep networks, which may be too much to digest
+on a first try of the book.
+It may be worth reading the introductory part,
+then leave the book and read the other resources,
+then come back to the other parts of the book later.</p>
 
 </div>
 </div>
@@ -11978,32 +11887,13 @@ a very small learning rate will make the model have a lot of inertia when adapti
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Do-you-need-Online-Learning?">Do you need Online Learning?<a class="anchor-link" href="#Do-you-need-Online-Learning?">&#182;</a></h3><p>There is a huge cost in achieving actual online learning: one cannot use probabilistic models,
-must define and test a learning rate, and several models
-can only use a subset of its capabilities as online learning models
-(e.g. SVMs can only use the linear kernel because it has a tunable decision function).
-And in most problems a model does not receive data all the time.</p>
-<p>Most machine learning problems will receive data at known intervals,
-e.g. a daily snapshot of a database or a time series of the last 30 days of trades.
-This means that you can retrain your model with the new data every time you receive it.
-You may need to slightly re-tune the hyperparameters
-but the grid search should be close to the current hyperparameters,
-since the new data is unlikely to be very different from the old one.</p>
-<p>Retraining a new model at certain intervals does not need to create downtimes,
-you can automate the training and only when the training and validation finishes
-point a load balancer to the new model.
-Training a new model at every batch also allow you to test it for obvious inconsistencies.
-Since most machine learning is performed as a service:
-a trained model sits in memory waits for input and sends back predictions,
-training a model at server startup is a completely valid and often used technique.</p>
-<p>In summary, you will only need an online learning model if either:</p>
-<ul>
-<li><p>The entire dataset cannot fit in memory,
-in this case you need online learning to train the model using parts of the dataset at a time.</p>
-</li>
-<li><p>You need very quick adaptation to new data, e.g. algorithmic trading.</p>
-</li>
-</ul>
+<p><a href="http://shop.oreilly.com/product/0636920052289.do"><em>Hands-On Machine Learning with Scikit-Learn and TensorFlow</em> by Aurélien Géron</a></p>
+<p>This one is not a free book.
+But if you are thinking of buying a book on machine learning,
+I'll thoroughly recommend this one.
+Géron goes through a lot of ML models explaining how they work below the hood.
+The book is in Python,
+and has a good balance between mathematical treatment and practical code.</p>
 
 </div>
 </div>
@@ -12012,13 +11902,19 @@ in this case you need online learning to train the model using parts of the data
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Can-I-do-Online-Dimensionality-Reduction-and-Clustering?">Can I do Online Dimensionality Reduction and Clustering?<a class="anchor-link" href="#Can-I-do-Online-Dimensionality-Reduction-and-Clustering?">&#182;</a></h3><p>Absolutely.  Moreover, it would sometimes be impossible to do online classification
-without the ability to perform online dimensionality reduction.
-The <a href="http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.IncrementalPCA.html">Incremental PCA</a> performs PCA in an online fashion,
-it understands the idea of batch processing and updates its eigenvectors batch by batch.</p>
-<p>Using the same concept (batches) the <code>k-means</code> algorithm has a <a href="http://scikit-learn.org/stable/modules/generated/sklearn.cluster.MiniBatchKMeans.html">Mini Batch k-means</a> variant.
-Akin of the incremental PCA, the mini batch k-means can deal with very big datasets in an online fashion.
-In general, in <code>sklearn</code> any model that has a <code>partial_fit</code> method, can perform online learning.</p>
+<h2 id="Extras">Extras<a class="anchor-link" href="#Extras">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://www.coursera.org/learn/machine-learning"><em>Machine Learning</em> by Andrew Ng</a></p>
+<p>The introductory course for machine learning on coursera.
+It is in MATLAB and/or Octave, not Python, but useful nevertheless.
+The course takes a different path from our course in that it takes on regression
+first and then explores ANNs based on online learning used in linear regression.</p>
 
 </div>
 </div>
@@ -12027,16 +11923,14 @@ In general, in <code>sklearn</code> any model that has a <code>partial_fit</code
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Models-Rot">Models Rot<a class="anchor-link" href="#Models-Rot">&#182;</a></h2><p>An ML model is, as the name suggests,
-a mathematical technique which estimates the behavior of the real world.
-Unfortunately (fortunately?) the real world changes, and if our model
-does not change in response it will soon perform worse and worse.</p>
-<p>Of course, this is not relevant to self-closed datasets,
-as the ones seen in competitions or in toy problems.
-But most models are expected to work on real, and actual, data.
-Recent data may have new trends,
-and a performance estimate without that trend will be overoptimistic.
-In other words, the performance of your model will decrease over time if you do not update it.</p>
+<p><a href="https://www.coursera.org/learn/neural-networks"><em>Neural Networks for Machine Learning</em> by Geoffrey Hinton</a></p>
+<p>Another coursera course.  This is a Neural Net overload.
+The course goes through the entire evolution of the neural networks we saw,
+through restricted boltzman machines, into deep belief nets and finally
+into the deep networks we hear about.
+It starts pretty close to where we left off.
+Yet, the course is mainly theoretical, if you do not have a good grasp
+of linear algebra, work on that first.</p>
 
 </div>
 </div>
@@ -12045,19 +11939,12 @@ In other words, the performance of your model will decrease over time if you do 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Monitor-your-model">Monitor your model<a class="anchor-link" href="#Monitor-your-model">&#182;</a></h3><p>Since the performance will decrease over time you need to know when it decreases to a point
-in which your model is not good enough anymore to perform its job.
-Even if you do not retrain your model in, say, daily batches,
-you still need to check the model's performance against new data;
-i.e. you need to cross check whether a model trained on new data
-would classify in the same manner as the current running model.</p>
-<p>Another reason to monitor your model is that you cannot test for every behavior during
-model validation (if you could you would not be using ML to solve the problem!).
-A new model, once trained on new data or an online model that has been battered with
-bad input for a while, may perform abysmally once deployed.
-In such a case you need a way of reverting to a previous model.
-For offline learning this is often easy as long as you did store previous data.
-For online learning you will need to store snapshots of your model at certain intervals.</p>
+<p><a href="http://catalogue.pearsoned.co.uk/educator/product/Artificial-Intelligence-A-Guide-to-Intelligent-Systems/9781408225745.page"><em>Artificial Intelligence</em> by Michael Negnevitsky</a></p>
+<p>A historical overview of how artificial intelligence got to where it is today.
+Easy to read, covers some models which we did not touch because they fell into disuse.
+Some of the material may seem outdated, it is a history book not a practical guide.
+Yet, if you are curious about the struggles of machine learning in the past,
+to not repeat similar errors for example, have a go at tis book.</p>
 
 </div>
 </div>
@@ -12066,18 +11953,16 @@ For online learning you will need to store snapshots of your model at certain in
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Save-your-model">Save your model<a class="anchor-link" href="#Save-your-model">&#182;</a></h2><p>First of all ask whether it makes sense to save the model.
-Often retraining on the most recent data, or a previous data snapshot at server startup
-is more convenient and even faster for some models (e.g. KNN).</p>
-<p>Since we are working with Python we can simply use Python's default way of storing
-serializable memory objects: <a href="https://docs.python.org/3/library/pickle.html">pickle</a>.
-The default <code>pickle.dumps</code> and <code>pickle.loads</code> work on pretty much all <code>sklearn</code> models,
-and, since <code>NumPy</code> arrays are serializable, <code>pickle</code> works as well on most other ML libraries.</p>
-<p>That said, <code>pickle</code> may result in quite bloated objects,
-this was one of the reasons <a href="https://pythonhosted.org/joblib/index.html">joblib</a> was developed.
-The <code>pickle</code> bloat is due to the fact that it converts <code>NumPy</code> arrays into lists,
-which <code>joblib.dumps</code> performs much more efficiently by storing the array as a binary lump.
-<code>sklearn</code> comes with a (possibly outdated) <code>joblib</code> copy at <code>sklearn.externals.joblib</code>.</p>
+<p><a href="http://www.greenteapress.com/thinkbayes/html/index.html"><em>Think Bayes</em> by Allen B. Downey</a></p>
+<p>Some people will insist that the most important part of artificial intelligence,
+and machine learning, is bayesian reasoning.
+This is mostly due to the fact that bayesian models are easy to interpret.
+Well, yes, they are easy to interpret to the seasoned data scientist that worked
+with bayesian models for years; not so much for most other people.
+That said, if you work as a Data Scientist, sooner or later you will need
+to deal with big bayesian models.
+Downey gives a good-enough, not-too-complicated
+presentation of how the bayesian reasoning concept is used to build models.</p>
 
 </div>
 </div>
@@ -12086,48 +11971,23 @@ which <code>joblib.dumps</code> performs much more efficiently by storing the ar
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Types-of-Machine-Learning-Models">Types of Machine Learning Models<a class="anchor-link" href="#Types-of-Machine-Learning-Models">&#182;</a></h2><p>We saw that we can divide machine learning problems/models in four categories:</p>
-<ul>
-<li>Classification</li>
-<li>Regression</li>
-<li>Dimensionality Reduction</li>
-<li>Clustering</li>
-</ul>
-<p>We also saw that the line between <em>classification</em> and <em>regression</em> is pretty thin,
-i.e. that these models only differ in how they present their outputs.
-Yet, there are even thinner divisions between other forms of machine learning techniques.
-Some other types for machine learning problems you may see out there are:</p>
-<ul>
-<li><p><em>Anomaly detection</em> is a binary classification problem where <em>normal</em>
-is one of the classes and <em>abnormal</em> the other.
-Tuning between precision and recall for these classes is often automated in a way that
-it is easy to change an abnormal activity into a normal sample upon human inspection.</p>
-</li>
-<li><p><em>Association Rule Learning</em> is a clustering problem where we use several
-different distance measures and deterministic ways of defining clusters.
-In other words, it is a clustering technique simplified to a level which
-can be easily explained.
-One such technique is hierarchical clustering.</p>
-</li>
-<li><p><em>Reinforcement Learning</em> is a non-linear online learning classification/regression
-technique with a <em>variable learning rate</em>.
-This attempt to reuse knowledge obtained from one task into learning another task.
-Reinforcement learning is what we often consider robot-AI, and, to be fair,
-is quite popular in robot development.</p>
-</li>
-</ul>
-<p>Finally there are also <strong>genetic algorithms</strong> and <strong>swarm intelligence</strong>
-which are completely different techniques.
-The mathematical foundation to the convergence of genetic algorithms
-or swarm intelligence are not developed.
-Both techniques take analogies from nature and use them to iteratively build and tune ML models.
-Experimental techniques proved that both techniques
-work but their application to new problems is tricky to develop.
-In essence, the use of these algorithms in a practical manner is viable,
-and even very successful, on specific problems.
-But the mathematical formulation of the techniques is next to non-existent.
-This may change in the following years (perhaps decades),
-if you want a not extensively explored field to work in there's your chance.</p>
+<p><a href="http://www.diveintopython3.net/"><em>Dive Into Python 3</em> by Mark Pilgrim</a></p>
+<p>The to-go book for Python programming.
+If you struggle with Python knowledge (not <code>NumPy</code> or <code>pandas</code>) this is the book to look for.
+Pilgrim is very funny, probably one of the best known authors in the Python world,
+worth reading just for the jokes.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="http://shop.oreilly.com/product/0636920065555.do"><em>Machine Learning and Security</em> by Chio and Freeman</a></p>
+<p>Machine Learning is getting more and more applications.
+This is an interesting example of it.
+Blue Team security using the exact tools we learn in the course.</p>
 
 </div>
 </div>
