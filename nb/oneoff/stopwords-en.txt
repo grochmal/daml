@@ -1,1 +1,1 @@
-../data/stopwords-en.txt
+../../data/stopwords-en.txt
