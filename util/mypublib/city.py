@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from .nbops import ClearNotebook, SoftLink
+from .nbops import ClearNotebook, CopyFile, SoftLink
 
 
 BUILD = {}
@@ -149,12 +149,21 @@ ClearNotebook(
     'nb/seaborn/seaborn-plots.ipynb',
     'pub/city/05-data-analytics/daml-05-04-seaborn.ipynb'),
 ClearNotebook(
-    'nb/seaborn/seaborn-plots.ipynb',
+    'nb/seaborn/seaborn-exercises.ipynb',
     'pub/city/05-data-analytics/daml-05-05-seaborn-exercises.ipynb'),
 #pub/city/05-data-analytics/daml-05-06-seaborn-exercises-solutions.ipynb
-ClearNotebook(
+CopyFile(
     'nb/da/die-hard.ipynb',
     'pub/city/05-data-analytics/daml-05-07-die-hard.ipynb'),
+SoftLink(
+    'nb/da/wikipedia-die-hard-cast.png',
+    'pub/city/05-data-analytics/daml-05-extra-wikipedia-die-hard-cast.png'),
+SoftLink(
+    'nb/da/wikipedia-vcard-pane.png',
+    'pub/city/05-data-analytics/daml-05-extra-wikipedia-vcard-pane.png'),
+SoftLink(
+    'nb/da/wikipedia-hidden-bday.png',
+    'pub/city/05-data-analytics/daml-05-extra-wikipedia-hidden-bday.png'),
 ]
 
 BUILD['lecture06'] = [
@@ -187,6 +196,9 @@ ClearNotebook(
     'nb/sklearn/exercises-classification.ipynb',
     'pub/city/07-fe-and-regularization/daml-07-06-exercises-clas.ipynb'),
 #pub/city/07-fe-and-regularization/daml-07-07-exercises-clas-solutions.ipynb
+ClearNotebook(
+    'nb/ml/least-squares.ipynb',
+    'pub/city/07-fe-and-regularization/daml-07-extra-least-squares.ipynb'),
 SoftLink(
     'data/stopwords-en.txt',
     'pub/city/07-fe-and-regularization/daml-07-extra-stopwords-en.txt'),
@@ -209,9 +221,6 @@ ClearNotebook(
     'nb/sklearn/exercises-unsupervised-learning.ipynb',
     'pub/city/08-pca-and-clustering/daml-08-05-exercises-ul.ipynb'),
 #pub/city/08-pca-and-clustering/daml-08-06-exercises-ul-solutions.ipynb
-ClearNotebook(
-    'nb/ml/least-squares.ipynb',
-    'pub/city/08-pca-and-clustering/daml-08-extra-least-squares.ipynb'),
 ]
 
 BUILD['lecture09'] = [
@@ -230,6 +239,9 @@ ClearNotebook(
 ClearNotebook(
     'nb/ml/real-world.ipynb',
     'pub/city/09-svms-and-random-forests/daml-09-05-real-world.ipynb'),
+SoftLink(
+    'data/rembrandt-tulp.png',
+    'pub/city/09-svms-and-random-forests/daml-09-extra-rembrant-tulp.png'),
 ]
 
 BUILD['lecture10'] = [

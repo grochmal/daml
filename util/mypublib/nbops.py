@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import shutil
 import nbformat
 import nbconvert
 
@@ -104,6 +105,17 @@ class ExportNotebook(PublishFile):
         os.makedirs(os.path.dirname(self.destination), exist_ok=True)
         htmlout = open(self.destination, 'w')
         html_export(nbin, htmlout, slides=True)
+
+
+class CopyFile(PublishFile):
+    """
+    Polymorphic structure to simply copy a file.
+    """
+    action = 'Copy file'
+
+    def publish(self):
+        os.makedirs(os.path.dirname(self.destination), exist_ok=True)
+        shutil.copyfile(self.origin, self.destination)
 
 
 class SoftLink(PublishFile):

@@ -7,9 +7,6 @@ __pychache__
 # jupyter
 .ipynb_checkpoints
 
-# solutions to the exercises
-*solutions.ipynb
-
 # setuptools
 /dist
 /MANIFEST
