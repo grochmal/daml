@@ -58,7 +58,7 @@
 - leave people to read the rest at home
 - the debugger will require some extra reading
 
-## daml-01-11-jupyter-exercises-2.ipynb --
+## daml-01-11-jupyter-exercises-2.ipynb
 
 - to do at home, may be discussed another week
 - some of the exercises are only there to play with jupyter
