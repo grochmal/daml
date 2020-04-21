@@ -36,10 +36,11 @@ def clearnb(ctx, nbinput, nboutput):
 @cli.command()
 @click.option(
         '-s', '--slides', is_flag=True, help='Slides HTML, no div borders.')
+@click.option('-f', '--imgfmt', default='b64', help='Attached image format.')
 @click.argument('nbinput', type=click.File('r'))
 @click.argument('htmlout', required=False)
 @click.pass_context
-def exporthtml(ctx, slides, nbinput, htmlout):
+def exporthtml(ctx, slides, imgfmt, nbinput, htmlout):
     """
     Exports complete HTML, including attachments.
 
@@ -54,7 +55,7 @@ def exporthtml(ctx, slides, nbinput, htmlout):
             click.echo(f'Export slides HTML: {nbinput.name} -> {htmlout.name}')
         else:
             click.echo(f'Export full HTML: {nbinput.name} -> {htmlout.name}')
-    nbops.html_export(nbinput, htmlout, slides=slides)
+    nbops.html_export(nbinput, htmlout, imgfmt=imgfmt, slides=slides)
 
 
 AVAILABLE_BUILDS = ['city']

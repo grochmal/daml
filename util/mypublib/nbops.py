@@ -2,6 +2,7 @@
 
 import os
 import shutil
+import click
 import nbformat
 import nbconvert
 
@@ -23,7 +24,17 @@ def clearnb(f_in, f_out):
     nbformat.write(clear_nb, f_out)
 
 
-def html_export(nbin, htmlout, slides=False):
+class Exp(nbconvert.SlidesExporter):
+    pass
+    #template_file = 'basic.tpl'
+    #template_file = '/home/grochmal/programs/my/daml/basic.tpl'
+    #default_template_path = '/home/grochmal/programs/my/daml'
+    #default_template_path = os.path.join("..", "templates", "html")
+    #def _template_file_default(self):
+    #    return 'basic.tpl'
+
+
+def html_export(nbin, htmlout, imgfmt='b64', slides=False):
     """
     Does a complete HTML export, including cell attachments.
 
@@ -38,7 +49,19 @@ def html_export(nbin, htmlout, slides=False):
         exporter = nbconvert.SlidesExporter()
     else:
         exporter = nbconvert.HTMLExporter()
-    body, _ = exporter.from_notebook_node(notebook)
+    #exporter = Exp()
+    exporter = nbconvert.HTMLExporter()
+    #exporter.template_file = '/home/grochmal/programs/my/daml/basic.tpl'
+    exporter.template_file = '/home/grochmal/programs/my/daml/bookhtml.tpl'
+    print('PATH', Exp.default_template_path)
+    resources = {
+        'title': 'NB Title',
+        #'mathjax': 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML'
+        'mathjax': 'MathJax-2.7.5/MathJax.js?config=TeX-AMS_HTML',
+        'main_style': 'bookhtml.css',
+        'extra_style': None,
+    }
+    body, _ = exporter.from_notebook_node(notebook, resources=resources)
     # save a mapping of all attachments
     images = []
     for cell in notebook['cells']:
@@ -46,14 +69,23 @@ def html_export(nbin, htmlout, slides=False):
             atts = cell['attachments']
             for filename, att in atts.items():
                 for mime, base64 in att.items():
-                    images.append(
-                            {'name': f'attachment:{filename}',
-                             'data': f'data:{mime};base64,{base64}'})
+                    images.append({
+                        'att_name': f'attachment:{filename}',
+                        'name': f'{filename}',
+                        'href': f'{filename}',
+                        'b64': f'data:{mime};base64,{base64}',
+                    })
     # fix the HTML by hand
     for i in images:
-        src = i['name']
-        base64 = i['data']
-        body = body.replace(f'src="{src}"', f'src="{base64}"', 1)
+        att = i['att_name']
+        data = i[imgfmt]
+        body = body.replace(f'src="{att}"', f'src="{data}"', 1)
+        short = data[:60]
+        if len(data) > 60:
+            short += '...'
+        click.echo(f'Image at: src="{short}"')
+    click.echo('%s %s' %  (dir(body), type(body)))
+    click.echo(body[:200])
     htmlout.write(body)
 
 
