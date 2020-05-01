@@ -1,0 +1,609 @@
+/* book css - several sources: jupyter defaults, bootstrap, reveal slides */
+body {
+  /* make sure the body covers the entire page - no matter what */
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  overflow: visible;
+  font-family: Helvetica, "DejaVu Sans", "Liberation Sans", Arial, sans-serif;
+  line-height: 1.2;
+  color: black;
+  font-size: 13pt;
+  background-color: #f3fdff;
+}
+@media print {
+  body {
+    /* overwrite possible customs CSS for printing */
+    font-size: 10pt;
+    background-color: #fff;
+  }
+}
+
+/* overrrides */
+div#notebook {
+  padding 0 !important;
+  font-size: 16pt !important;
+  line-height: 1.2em !important;
+}
+div.container {
+  background-color: #f3fdff !important;
+  width:100% !important;
+}
+.rendered_html :link, .rendered_html :visited {
+  text-decoration: none !important;
+}
+
+/* flex layout */
+div.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border 0;
+  margin: 0;
+  padding: 6px;
+}
+div.inner_cell {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+  flex: 1;  /* scale every cell equally */
+}
+div.unrecognized_cell {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background-color: #eaeaea;
+}
+div.unrecognized_cell div.inner_cell {
+  padding: 7px;
+  font-weight: bold;
+  color: red;
+}
+div.text_cell {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.text_cell_render {
+  padding: 0.3em;
+}
+div.text_cell.rendered div.rendered_html {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+div.input {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  page-break-inside: avoid;
+}
+div.input_area {
+  margin: 0;
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background-color: #f6f2f2;
+}
+div.highlight {
+  margin: 0.4em;  /* match code mirror */
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+}
+div.output_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.output {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.output_area {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0;
+  page-break-inside: avoid;
+}
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;  /* match code mirror */
+  flex: 1;
+  max-width: calc(100% - 11ex);
+}
+div.output_text {
+  text-align: left;
+}
+div.output_stderr {
+  background-color: #fdd;
+}
+div.output_latex {
+  text-align: left;
+}
+div.output_area .MathJax_Display {
+  text-align: left;
+}
+div.prompt {
+  /* needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 11ex;
+  padding: 0.4em;  /* match code mirror */
+  margin: 0;
+  font-family: monospace;
+  text-align: right;
+  /* use default (non-text) cursor */
+  cursor: default;
+}
+div.prompt:empty {
+  padding: 0 0.4em;  /* just in case, for empty output cells */
+}
+div.input_prompt {
+  /* input_area and input_prompt must match top border and margin */
+  color: #303f9f;
+  border-top: 1px solid transparent;
+}
+div.output_prompt {
+  color: #d84315;
+}
+
+/* actual style for html tags */
+abbr {
+  border-bottom: 1px dotted;
+}
+address {
+  margin-bottom: 1em;
+  font-style: normal;
+}
+mark {
+  background-color: #ece8d3;
+  padding: 0.2em;
+  color: black;
+}
+small {
+  font-size: 90%;
+}
+b, strong {
+  font-weight: bold;
+}
+hr {
+  color: black;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border: 0;
+  border-top: 1px solid #ccc;
+}
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-weight: 600;
+  line-height: 1.1;
+}
+h1, h2, h3,
+.h1, .h2, .h3 {
+  margin-top: 1.4em;
+  margin-bottom: 0.7em;
+}
+h4, h5, h6,
+.h4, .h5, .h6 {
+  margin-top: 0.7em;
+  margin-bottom: 0.7em;
+  font-size: 1em;;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+footer {
+  font-size: 0.5em;
+}
+a {
+  color: #36c65a;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+p {
+  margin-top: 1em;
+  margin-bottom: 0.6em;
+}
+textarea {
+  overflow: auto;
+}
+figure {
+  margin: 0;
+}
+img, svg {
+  margin-left: auto;
+  margin-right: auto;
+  border: 0;
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img,
+div.output_area svg {
+  margin-top: 0.5em;
+}
+img.unconfined,
+svg.unconfined {
+  max-width: none;
+}
+blockquote {
+  padding: 0.1em 0.6em;
+  margin: 1em 2em;
+  border-left: 5px solid #eeeeee;
+}
+dl {
+  margin-top: 0;
+  margin-bottom: 1.5em;
+}
+dt {
+  font-weight: bold;
+}
+dd {
+  margin-left: 0;
+}
+caption {
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  color: #777777;
+  text-align: left;
+}
+table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border: 1px solid black;
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: transparent;
+}
+td, th {
+  text-align: left;
+  vertical-align: middle;
+  padding: 0.3em;
+}
+th {
+  font-weight: bold;
+}
+tr, th, td {
+  border: 1px solid black;
+}
+ul, ol {
+  margin-top: 1em;
+  margin-left: 2em;
+  padding: 0;
+}
+ul ul, ol ul, ul ol, ol ol,
+ul ul ul, ol ol ol {
+  margin: 0;
+  margin-left: 2em;
+}
+ul {
+  list-style: disc;
+}
+ul ul {
+  list-style: square;
+}
+ul ul ul {
+  list-style: circle;
+}
+ol {
+  list-style: decimal;
+}
+ol ol {
+  list-style: upper-alpha;
+}
+ol ol ol {
+  list-style: lower-alpha;
+}
+div.toc ul {
+  list-style: none;
+}
+kbd,
+code,
+pre,
+samp {
+  font-family: "DejaVu Sans Mono", monospace;
+  white-space: pre-wrap;
+  background-color: #f6f2f2;
+}
+kbd {
+  padding: 1px 4px;
+  font-size: 95%;
+  border: 2px solid #aaa;
+  border-radius: 5px;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #fff;
+}
+code {
+  border: 0;
+  padding: 0;
+  font-size: 90%;
+  color: black;
+}
+pre {
+  display: block;
+  padding: 0.3em;
+  word-break: break-all;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+pre code {
+  background-color: transparent;
+}
+div.rendered_html pre {
+  margin: 1em 2em;
+}
+div.input_area div.highlight pre {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+}
+div.output_area pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  font-size: 90%;
+}
+
+/* code mirror colors */
+div.highlight .c {  /* comment */
+  color: #408080;
+  font-style: italic;
+}
+div.highlight .err {  /* error */
+  border: 1px solid #ff0000;
+}
+div.highlight .k {  /* keyword */
+  color: #008000;
+  font-weight: bold;
+}
+div.highlight .o {  /* operator */
+  color: #666666;
+}
+div.highlight .ch {  /* comment hashbang */
+  color: #408080;
+  font-style: italic;
+}
+div.highlight .cm {  /* comment multiline */
+  color: #408080;
+  font-style: italic;
+}
+div.highlight .cp {  /* comment preproc */
+  color: #bc7A00;
+}
+div.highlight .cpf {  /* comment preproc file */
+  color: #408080;
+  font-style: italic;
+}
+div.highlight .c1 {  /* comment single */
+  color: #408080;
+  font-style: italic;
+}
+div.highlight .cs {  /* comment special */
+  color: #408080;
+  font-style: italic;
+}
+div.highlight .gd {  /* generic deleted */
+  color: #a00000;
+}
+div.highlight .ge {  /* generic emph */
+  font-style: italic;
+}
+div.highlight .gr {  /* generic error */
+  color: #ff0000;
+}
+div.highlight .gh {  /* generic heading */
+  color: #000080;
+  font-weight: bold;
+}
+div.highlight .gi {  /* generic inserted */
+  color: #00a000;
+}
+.highlight .go {  /* generic output */
+  color: #888888;
+}
+div.highlight .gp {  /* generic prompt */
+  color: #000080;
+  font-weight: bold;
+}
+div.highlight .gs {  /* generic strong */
+  font-weight: bold;
+}
+div.highlight .gu {  /* generic subheading */
+  color: #800080;
+  font-weight: bold;
+}
+div.highlight .gt {  /* generic traceback */
+  color: #0044DD;
+}
+div.highlight .il {  /* literal number integer long */
+  color: #666666;
+}
+div.highlight .kc {  /* keyword constant */
+  color: #008000;
+  font-weight: bold;
+}
+div.highlight .kd {  /* keyword declaration */
+  color: #008000;
+  font-weight: bold;
+}
+div.highlight .kn {  /* keyword namespace */
+  color: #008000;
+  font-weight: bold;
+}
+div.highlight .kp {  /* keyword pseudo */
+  color: #008000;
+}
+div.highlight .kr {  /* keyword reserved */
+  color: #008000;
+  font-weight: bold;
+}
+div.highlight .kt {  /* keyword type */
+  color: #b00040;
+}
+div.highlight .m {  /* literal number */
+  color: #666666;
+}
+div.highlight .s {  /* literal string */
+  color: #ba2121;
+}
+div.highlight .na {  /* name attribute */
+  color: #7d9029;
+}
+div.highlight .nb {  /* name builtin */
+  color: #008000;
+}
+div.highlight .nc {  /* name class */
+  color: #0000ff;
+  font-weight: bold;
+}
+div.highlight .no {  /* name constant */
+  color: #880000;
+}
+div.highlight .nd {  /* name decorator */
+  color: #aa22ff;
+}
+div.highlight .ni {  /* name entity */
+  color: #999999;
+  font-weight: bold;
+}
+div.highlight .ne {  /* name exception */
+  color: #d2413a;
+  font-weight: bold;
+}
+div.highlight .nf {  /* name function */
+  color: #0000ff;
+}
+div.highlight .nl {  /* name label */
+  color: #a0a000;
+}
+div.highlight .nn {  /* name namespace */
+  color: #0000ff;
+  font-weight: bold;
+}
+div.highlight .nt {  /* name tag */
+  color: #008000;
+  font-weight: bold;
+}
+div.highlight .nv {  /* name variable */
+  color: #19177c;
+}
+div.highlight .ow {  /* operator word */
+  color: #aa22ff;
+  font-weight: bold;
+}
+div.highlight .w {  /* text whitespace */
+  color: #bbbbbb;
+}
+div.highlight .mb {  /* literal number bin */
+  color: #666666;
+}
+div.highlight .mf {  /* literal number float */
+  color: #666666;
+}
+div.highlight .mh {  /* literal number hex */
+  color: #666666;
+}
+div.highlight .mi {  /* literal number integer */
+  color: #666666;
+}
+div.highlight .mo {  /* literal number oct */
+  color: #666666;
+}
+div.highlight .sa {  /* literal string affix */
+  color: #ba2121;
+}
+div.highlight .sb {  /* literal string backtick */
+  color: #ba2121;
+}
+div.highlight .sc {  /* literal string char */
+  color: #ba2121;
+}
+div.highlight .dl {  /* literal string delimiter */
+  color: #ba2121;
+}
+div.highlight .sd {  /* literal string doc */
+  color: #ba2121;
+  font-style: italic;
+}
+div.highlight .s2 {  /* literal string double */
+  color: #ba2121;
+}
+div.highlight .se {  /* literal string escape */
+  color: #bb6622;
+  font-weight: bold;
+}
+div.highlight .sh {  /* literal.string.heredoc */
+  color: #ba2121;
+}
+div.highlight .si {  /* literal string interpol */
+  color: #bb6688;
+  font-weight: bold;
+}
+div.highlight .sx {  /* literal string other */
+  color: #008000;
+}
+div.highlight .sr {  /* literal string regex */
+  color: #bb6688;
+}
+div.highlight .s1 {  /* literal string single */
+  color: #ba2121;
+}
+div.highlight .ss {  /* literal string symbol */
+  color: #19177c;
+}
+div.highlight .bp {  /* name builtin pseudo */
+  color: #008000;
+}
+div.highlight .fm {  /* name function magic */
+  color: #0000ff;
+}
+div.highlight .vc {  /* name variable class */
+  color: #19177c;
+}
+div.highlight .vg {  /* name variable global */
+  color: #19177c;
+}
+div.highlight .vi {  /* name variable instance */
+  color: #19177c;
+}
+div.highlight .vm {  /* name variable magic */
+  color: #19177c;
+}
+
+/* show anchors on hover */
+a.anchor-link {
+  padding: 0px 20px;
+  display: none;
+}
+h1:hover a.anchor-link, .h1:hover a.anchor-link,
+h2:hover a.anchor-link, .h2:hover a.anchor-link,
+h3:hover a.anchor-link, .h3:hover a.anchor-link,
+h4:hover a.anchor-link, .h4:hover a.anchor-link,
+h5:hover a.anchor-link, .h5:hover a.anchor-link,
+h6:hover a.anchor-link, .h6:hover a.anchor-link {
+  display: inline;
+}
+
