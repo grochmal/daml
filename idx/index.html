@@ -19,7 +19,7 @@ body {
 }
 .index {
   text-align: left;
-  padding-left: 20em;
+  padding-left: 10em;
 }
 .cover > img {
   width: 70%;
@@ -30,6 +30,7 @@ a {
 }
 a:hover {
   text-decoration: underline;
+  font-weight: 600;
 }
 .footer {
   font-size: 0.5em;
@@ -37,30 +38,117 @@ a:hover {
 ul {
   list-style: none;
 }
+li {
+  margin-bottom: 0.5em;
+}
+.colab-img {
+  height: 20px;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+a.colab-a {
+  opacity: 0.5;
+}
+a.colab-a:hover {
+  text-decoration: none;
+  opacity: 0.9;
+}
 </style>
 </head>
 <body>
+
   <div class="cover">
     <img src="cover-some.svg">
   </div>
   <div class="index">
+
     <a href="nb/py-introduction-daml.html">00.00  Introduction</a>
+
     <p>Chapter 01 - Basics
     <ul>
+
       <li><a href="nb/py-notebook-basics.html">
         01.00 Jupyter Lab and Notebooks</a>
+
       <li><a href="nb/py-notebook-code.html">
         01.01 Running Code in the Notebook</a>
+        <a target="_blank" class="colab-a"
+           href="https://colab.research.google.com/github/grochmal/daml/blob/master/nb/py-notebook-code.ipynb">
+        <img class="colab-img" alt="Colab" title="Open in Colab"
+             src="https://colab.research.google.com/assets/colab-badge.svg">
+        </a>
+
       <li><a href="nb/py-jupyter-exercises-1.html">
         01.02 Jupyter Exercises 1</a>
+        <a target="_blank" class="colab-a"
+           href="https://colab.research.google.com/github/grochmal/daml/blob/master/nb/py-jupyter-exercises-1.ipynb">
+        <img class="colab-img" alt="Colab" title="Open in Colab"
+             src="https://colab.research.google.com/assets/colab-badge.svg">
+        </a>
+
       <li><a href="nb/py-pydata-primer.html">
         01.03 PyData Primer</a>
+        <a target="_blank" class="colab-a"
+           href="https://colab.research.google.com/github/grochmal/daml/blob/master/nb/py-pydata-primer.ipynb">
+        <img class="colab-img" alt="Colab" title="Open in Colab"
+             src="https://colab.research.google.com/assets/colab-badge.svg">
+        </a>
+
       <li><a href="nb/py-exercises.html">
         01.04 Python Exercises</a>
+        <a target="_blank" class="colab-a"
+           href="https://colab.research.google.com/github/grochmal/daml/blob/master/nb/py-exercises.ipynb">
+        <img class="colab-img" alt="Colab" title="Open in Colab"
+             src="https://colab.research.google.com/assets/colab-badge.svg">
+        </a>
+
       <li><a href="nb/py-notebook-magic.html">
         01.05 Magic</a>
+        <a target="_blank" class="colab-a"
+           href="https://colab.research.google.com/github/grochmal/daml/blob/master/nb/py-notebook-magic.ipynb">
+        <img class="colab-img" alt="Colab" title="Open in Colab"
+             src="https://colab.research.google.com/assets/colab-badge.svg">
+        </a>
+
       <li><a href="nb/py-jupyter-exercises-2.html">
         01.06 Jupyter Exercises 2</a>
+        <a target="_blank" class="colab-a"
+           href="https://colab.research.google.com/github/grochmal/daml/blob/master/nb/py-jupyter-exercises-2.ipynb">
+        <img class="colab-img" alt="Colab" title="Open in Colab"
+             src="https://colab.research.google.com/assets/colab-badge.svg">
+        </a>
+
+    </ul>
+
+    <p>Chapter 02 - NumPy
+    <ul>
+      <li><a href="nb/np-numpy-basics.html">
+        02.00 NumPy Basics</a>
+      <li><a href="nb/np-operations.html">
+        02.01 NumPy Operations</a>
+      <li><a href="nb/np-randomness.html">
+        02.02 Randomness</a>
+      <li><a href="nb/np-exercises.html">
+        02.03 NumPy Exercises</a>
+      <li><a href="nb/np-random-walk.html">
+        02.04 Random Walk</a>
+      <li><a href="nb/np-array-ops.html">
+        02.05 Array Algebra</a>
+    </ul>
+    <p>Chapter 03 - Plotting
+    <ul>
+      <li><a href="nb/plt-plotting-basics.html">
+        03.00 Plotting Basics</a>
+      <li><a href="nb/plt-reference.html">
+        03.01 Reference</a>
+      <li><a href="nb/plt-stat-plots.html">
+        03.02 Statistics</a>
+      <li><a href="nb/plt-exercises.html">
+        03.03 Matplotlib Exercises</a>
+      <li><a href="nb/plt-extra.html">
+        03.04 Plotting Engines</a>
+      <li><a href="nb/plt-tools.html">
+        03.05 Other Plotting Tools</a>
     </ul>
   </div>
   <div>
