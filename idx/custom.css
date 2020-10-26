@@ -32,8 +32,11 @@ div.container {
   background-color: #f3fdff !important;
   width:100% !important;
 }
-.rendered_html :link, .rendered_html :visited {
+.rendered_html:link, .rendered_html:visited {
   text-decoration: none !important;
+}
+.rendered_html table {
+  font-size: 16pt !important;
 }
 
 /* flex layout */
