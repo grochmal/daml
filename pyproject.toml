@@ -1,0 +1,25 @@
+[project]
+name = "daml"
+version = "0.7.0"
+description = "DAML lecture materials"
+authors = [
+    {name = "Michal Grochmal", email = "mike@grochmal.org"},
+]
+dependencies = [
+    "jupyter==1.0.0",
+    "scikit-learn>=1.6.1",
+    "torch>=2.6.0",
+    "pandas>=2.2.3",
+    "matplotlib>=3.10.1",
+    "jupyterlab-vim>=4.1.4",
+    "transformers>=4.49.0",
+    "safetensors>=0.5.3",
+    "gymnasium>=1.1.1",
+    "scikit-image>=0.25.2",
+]
+requires-python = ">=3.10.0"
+readme = "README.md"
+license = {text = "GPL"}
+
+[tool.setuptools.packages.find]
+where = ["daml"]
