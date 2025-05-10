@@ -1,5 +1,3 @@
-# ignores for python and vim
-
 # python (2 and 3)
 *.pyc
 __pychache__
@@ -14,4 +12,10 @@ __pychache__
 
 # vim
 *.swp
+
+# os
+.DS_store
+
+# repo
+/pub
 
