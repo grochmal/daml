@@ -10,7 +10,7 @@ __pychache__
 # setuptools
 /dist
 /MANIFEST
-/*.egg-info
+*.egg-info
 
 # vim
 *.swp

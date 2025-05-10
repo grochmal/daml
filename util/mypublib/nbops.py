@@ -106,7 +106,7 @@ class PublishFile(object):
         destination = obj.destination
         if ext:
             base, _ = os.path.splitext(obj.destination)
-            destiation = base + ext
+            destination = base + ext
         return cls(obj.origin, destination)
 
     def __str__(self):
