@@ -104,6 +104,11 @@ BUILD["lecture_02"] = [
         LECTURE_02,
     ),
     ClearNotebook(
+        "np-array-algebra.ipynb",
+        "daml-02-05-array-algebra.ipynb",
+        LECTURE_02,
+    ),
+    ClearNotebook(
         "np-random-walk.ipynb",
         "daml-02-06-random-walk.ipynb",
         LECTURE_02,
