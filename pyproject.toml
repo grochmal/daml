@@ -1,10 +1,10 @@
 [project]
 name = "daml"
-version = "0.7.0"
 description = "DAML lecture materials"
 authors = [
     {name = "Michal Grochmal", email = "mike@grochmal.org"},
 ]
+dynamic = ["readme", "version"]
 dependencies = [
     "jupyter==1.0.0",
     "scikit-learn>=1.6.1",
@@ -17,10 +17,43 @@ dependencies = [
     "gymnasium>=1.1.1",
     "scikit-image>=0.25.2",
     "seaborn>=0.13.2",
+    "pygame>=2.6.1",
 ]
 requires-python = ">=3.10.0"
-readme = "README.md"
 license = {text = "GPL"}
 
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "ruff>=0.12.1",
+]
+
 [tool.setuptools.packages.find]
-where = ["daml"]
+where = ["."]
+
+[tool.setuptools.dynamic]
+version = { attr = 'daml.__version__' }
+readme = { file = ["README.md"] }
+
+[tool.ruff]
+line-length = 80
+lint.select = [
+    "E4",
+    "E5",
+    "E7",
+    "E9",
+    "F",
+    "B",  # flake8 bugbear
+    "COM818",  # trailing tuple comma lint
+    "DTZ",  # datetimes with timezones
+    "T100",  # debbugger break left in code
+    "PT",  # flake8 pytest
+    "Q",  # opinionated quotes
+    "ARG",  # unused arguments
+    "I",  # isort
+    "NPY", # numpy types
+    "PD",  # pandas vet
+    "TRY2",  # triceratops exceptions
+    "ANN001",  # must add types for explicit arguments
+    "ANN2",  # must always type return type
+]
