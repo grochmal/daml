@@ -10,12 +10,15 @@ __pychache__
 /MANIFEST
 *.egg-info
 
-# vim
+# editors
 *.swp
+*~
+.vscode
 
 # os
 .DS_store
 
 # repo
 /pub
+/extra
 

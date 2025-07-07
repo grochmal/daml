@@ -1,11 +1,15 @@
+import contextlib
 import os
 import shutil
-import contextlib
 import zipfile
+from collections.abc import Generator
 from dataclasses import dataclass
 from functools import singledispatch
-import nbformat
+from pathlib import Path
+
 import nbconvert
+import nbformat
+from pyparsing import Any
 
 
 @dataclass
@@ -14,8 +18,7 @@ class Directory:
 
 
 @dataclass
-class Operation:
-    ...
+class Operation: ...
 
 
 @dataclass
@@ -38,22 +41,26 @@ class ZipDirectory(Operation):
 
 
 @contextlib.contextmanager
-def ctx_cd(x):
-    d = os.getcwd()
-    os.chdir(x)
+def ctx_cd(new_dir: Path | str) -> Generator[None, None, None]:
+    old_dir = os.getcwd()
+    os.chdir(new_dir)
     try:
         yield
     finally:
-        os.chdir(d)
+        os.chdir(old_dir)
 
 
 @singledispatch
-def perform_operation(op, nb_dir: str, pub_dir: str):
+def perform_operation(
+    op: Any,
+    nb_dir: str,  # noqa: ARG001
+    pub_dir: str,  # noqa: ARG001
+) -> None:
     raise ValueError(f"Opearion {op} not supported")
 
 
 @perform_operation.register
-def _(op: ClearNotebook, nb_dir: str, pub_dir: str):
+def _(op: ClearNotebook, nb_dir: str, pub_dir: str) -> None:
     f_in = os.path.join(nb_dir, op.source_f)
     f_out = os.path.join(pub_dir, op.out_dir.path, op.out_f)
     os.makedirs(os.path.join(pub_dir, op.out_dir.path), exist_ok=True)
@@ -66,7 +73,11 @@ def _(op: ClearNotebook, nb_dir: str, pub_dir: str):
 
 
 @perform_operation.register
-def _(op: CopyFile, nb_dir: str, pub_dir: str):
+def _(
+    op: CopyFile,
+    nb_dir: str,
+    pub_dir: str,
+) -> None:
     f_in = os.path.join(nb_dir, op.source_f)
     f_out = os.path.join(pub_dir, op.out_dir.path, op.source_f)
     os.makedirs(os.path.dirname(op.out_dir.path), exist_ok=True)
@@ -74,7 +85,11 @@ def _(op: CopyFile, nb_dir: str, pub_dir: str):
 
 
 @perform_operation.register
-def _(op: ZipDirectory, nb_dir: str, pub_dir: str):
+def _(
+    op: ZipDirectory,
+    nb_dir: str,  # noqa: ARG001
+    pub_dir: str,
+) -> None:
     in_dir = os.path.join(pub_dir, op.input_dir.path)
     dirname, basename = os.path.split(in_dir)
     out_f = f"{basename}.zip"
@@ -88,8 +103,14 @@ def _(op: ZipDirectory, nb_dir: str, pub_dir: str):
                     zf.write(os.path.join(root, f))
 
 
-def build_lecture(operations: list[Operation]):
-    nb_dir = os.getenv("NB_DIR", "nb")
-    pub_dir = os.getenv("PUB_DIR", "pub")
+def build_lecture(
+    operations: list[Operation],
+    nb_dir: str | None = None,
+    pub_dir: str | None = None,
+) -> None:
+    if nb_dir is None:
+        nb_dir = os.getenv("NB_DIR", "nb")
+    if pub_dir is None:
+        pub_dir = os.getenv("PUB_DIR", "pub")
     for op in operations:
         perform_operation(op, nb_dir, pub_dir)

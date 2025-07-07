@@ -1,11 +1,10 @@
 from daml.pub import (
-    Directory,
     ClearNotebook,
     CopyFile,
+    Directory,
     ZipDirectory,
     build_lecture,
 )
-
 
 BASE = "city_10_weeks"
 LECTURE_01 = Directory(f"{BASE}/01-python-jupyter")
@@ -544,6 +543,21 @@ BUILD["lecture_10"] = [
     ClearNotebook(
         "apx-attention.ipynb",
         "daml-10-14-attention.ipynb",
+        LECTURE_10,
+    ),
+    ClearNotebook(
+        "apx-flew-over-nlp.ipynb",
+        "daml-10-15-flew-over-nlp.ipynb",
+        LECTURE_10,
+    ),
+    ClearNotebook(
+        "apx-q-learning.ipynb",
+        "daml-10-16-q-learning.ipynb",
+        LECTURE_10,
+    ),
+    ClearNotebook(
+        "apx-attention.ipynb",
+        "daml-10-17-attention.ipynb",
         LECTURE_10,
     ),
     CopyFile("ol-activation-functions.svg", LECTURE_10),
