@@ -545,21 +545,6 @@ BUILD["lecture_10"] = [
         "daml-10-14-attention.ipynb",
         LECTURE_10,
     ),
-    ClearNotebook(
-        "apx-flew-over-nlp.ipynb",
-        "daml-10-15-flew-over-nlp.ipynb",
-        LECTURE_10,
-    ),
-    ClearNotebook(
-        "apx-q-learning.ipynb",
-        "daml-10-16-q-learning.ipynb",
-        LECTURE_10,
-    ),
-    ClearNotebook(
-        "apx-attention.ipynb",
-        "daml-10-17-attention.ipynb",
-        LECTURE_10,
-    ),
     CopyFile("ol-activation-functions.svg", LECTURE_10),
     CopyFile("ol-ann-full.svg", LECTURE_10),
     CopyFile("ol-ann-matrix-form.svg", LECTURE_10),
